@@ -33,7 +33,7 @@ The [hauschi86/openttd-server (aka andreashauschild)](https://github.com/andreas
             ports:
                - 3979:3979
             volumes:
-                - /path/to/config:/root/.local/share/openttd/config
+                - /path/to/config:/root/.config/openttd
                 - /path/to/saves:/root/.local/share/openttd/save/
             stdin_open: true   
             tty: true
