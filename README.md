@@ -35,6 +35,8 @@ The [hauschi86/openttd-server (aka andreashauschild)](https://github.com/andreas
             volumes:
                 - /path/to/config:/root/.local/share/openttd/config
                 - /path/to/saves:/root/.local/share/openttd/save/
+            stdin_open: true   
+            tty: true
    
    ```
 
