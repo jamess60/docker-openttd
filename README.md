@@ -1,6 +1,6 @@
 # James_S60 - Docker OpenTTD 
 
-(Dockerhub)[https://hub.docker.com/r/jamess60/openttd]
+[Dockerhub](https://hub.docker.com/r/jamess60/openttd)
 
 ## Intro
 
@@ -10,13 +10,13 @@ My approach is to build OpenTTD from source (as opposed to using the official bi
 
 ## How does it compare to the competition?
 
-The (bateau84/openttd)[https://github.com/bateau84/openttd] appears to be the community default (based on number of pulls). My container differs in the following ways: 
+The [bateau84/openttd](https://github.com/bateau84/openttd) appears to be the community default (based on number of pulls). My container differs in the following ways: 
 - It builds OpenTTD from source, so it can be built on any architecture (not just x86) - This has a huge performance boost for aarch64
 - It's arguably lighter weight - The use of SH scripts and the execution ordering goes against docker image layer philosphy, so the (cleanup)[https://github.com/bateau84/openttd/blob/master/cleanup.sh] could make the image larger! (While I appreciate my image is large, this is because source is left over due to dynamic/static linking etc. Will explore tidying up the compile flags later.)
 - More up to date packages/openttd version. At time of writing, this image still uses OTTD 13.x
 
 
-The (hauschi86/openttd-server (aka andreashauschild))[https://github.com/andreashauschild/openttd-server] is a nice option because of its fancy web gui, allowing you to host multiple OTTD servers from one container. While using this container, I experienced both performance issues (clients dropping due to cant keep up with server errors, even over LAN on powerful systems) and several (map corruption/deletion problems)[https://github.com/andreashauschild/openttd-server/issues/16]. Another user opened a (potentially similar issue)[https://github.com/andreashauschild/openttd-server/issues/8] in 2023 and did not get a satisfactory reply. It appears this project is inactive (aside from TTD version updates and a recent gui tweak). In addition, this image is still x86 only as opposed to my multiarch. 
+The [hauschi86/openttd-server (aka andreashauschild)](https://github.com/andreashauschild/openttd-server) is a nice option because of its fancy web gui, allowing you to host multiple OTTD servers from one container. While using this container, I experienced both performance issues (clients dropping due to cant keep up with server errors, even over LAN on powerful systems) and several [map corruption/deletion problems](https://github.com/andreashauschild/openttd-server/issues/16). Another user opened a [potentially similar issue](https://github.com/andreashauschild/openttd-server/issues/8) in 2023 and did not get a satisfactory reply. It appears this project is inactive (aside from TTD version updates and a recent gui tweak). In addition, this image is still x86 only as opposed to my multiarch. 
 
 
 ## How to deploy/use
@@ -42,7 +42,7 @@ or use docker run. Example: ```docker run -v ./save:/root/.local/share/openttd/s
 
 2. Run the server once (to populate the config dir) and then exit 
 
-3. Edit the openttd.cfg file to your liking. An example file is provided, but you should refer to the (official documentation)[https://wiki.openttd.org/en/Archive/Manual/Settings/Openttd.cfg] for a full list of parameters. You can also generate the file via the OpenTTD client gui options menu. There are no environment variables for this container. 
+3. Edit the openttd.cfg file to your liking. An example file is provided, but you should refer to the [official documentation](https://wiki.openttd.org/en/Archive/Manual/Settings/Openttd.cfg) for a full list of parameters. You can also generate the file via the OpenTTD client gui options menu. There are no environment variables for this container. 
 
 4. Launch the container again and start playing :) 
 
