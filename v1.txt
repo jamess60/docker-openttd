@@ -1,0 +1,65 @@
+#############
+#Build Stage#
+#############
+FROM docker.io/library/debian:12-slim AS builder
+
+# Set Versions
+ARG OPENTTD_VERSION="14.1"
+ARG OPENGFX_VERSION="7.1"
+ARG MAKE_THREADS="2"
+
+# Install Packages
+RUN apt-get update; apt-get install -y \
+                dumb-init wget xz-utils ca-certificates libfontconfig1 libfreetype6 libfluidsynth3 \
+                libicu-dev libpng16-16 liblzma-dev liblzo2-2 libsdl1.2debian libsdl2-2.0-0 build-essential \
+                pkg-config libsdl1.2-dev zlib1g-dev libfluidsynth-dev liblzo2-dev liblzma-dev git timidity \
+                freepats make cmake xz-utils
+
+## Compile OpenTTD
+WORKDIR /tmp
+
+RUN wget -q https://cdn.openttd.org/openttd-releases/${OPENTTD_VERSION}/openttd-${OPENTTD_VERSION}-source.tar.xz; \
+            tar -xf openttd-${OPENTTD_VERSION}-source.tar.xz; \
+            mkdir -p /tmp/openttd-${OPENTTD_VERSION}/build
+
+WORKDIR /tmp/openttd-${OPENTTD_VERSION}/build
+
+RUN cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DOPTION_DEDICATED=ON -DOPTION_USE_ASSERTS=OFF .. ; \
+    make -j ${MAKE_THREADS}
+
+# Install GFX
+RUN mkdir -p /tmp/openttd-${OPENTTD_VERSION}/build/baseset
+WORKDIR /tmp
+
+RUN wget -q -O opengfx-${OPENGFX_VERSION}.zip https://cdn.openttd.org/opengfx-releases/${OPENGFX_VERSION}/opengfx-${OPENGFX_VERSION}-all.zip; \
+    tar -xzvf opengfx-${OPENGFX_VERSION}.zip; \
+    mv /tmp/opengfx-${OPENGFX_VERSION} /tmp/openttd-${OPENTTD_VERSION}/build/baseset/
+
+
+#############
+# Run Stage #
+#############
+FROM docker.io/library/debian:12-slim AS prod
+
+# Set Versions
+ARG OPENTTD_VERSION="14.1"
+
+# Install Packages 
+RUN apt-get update; apt-get upgrade -y; apt-get autoremove -y; apt-get install -y \
+    zlib1g liblzma5 libpng16-16 liblzo2-2 libcurl4 libsdl2-2.0-0 libfluidsynth3
+
+
+# Copy OpenTTD from Builder
+RUN mkdir -p /usr/share/openttd
+COPY --from=builder /tmp/openttd-${OPENTTD_VERSION}/build /usr/share/openttd
+
+
+# Expose
+EXPOSE 3979/tcp
+EXPOSE 3979/udp
+
+
+# Start OpenTTD server
+ENTRYPOINT ["/usr/share/openttd/openttd", "-D"]
+
+
