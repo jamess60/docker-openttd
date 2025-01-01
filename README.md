@@ -42,7 +42,7 @@ or use docker run. Example: ```docker run -v ./save:/root/.local/share/openttd/s
 
 2. Run the server once (to populate the config dir) and then exit 
 
-3. Edit the openttd.cfg file to your liking. An example file is provided, but you should refer to the [official documentation](https://wiki.openttd.org/en/Archive/Manual/Settings/Openttd.cfg) for a full list of parameters. You can also generate the file via the OpenTTD client gui options menu. There are no environment variables for this container. 
+3. Edit the openttd.cfg file to your liking. An [example](https://github.com/jamess60/docker-openttd/blob/main/openttd.cfg.example) file is provided, but you should refer to the [official documentation](https://wiki.openttd.org/en/Archive/Manual/Settings/Openttd.cfg) for a full list of parameters. You can also generate the file via the OpenTTD client gui options menu. The [example](https://github.com/jamess60/docker-openttd/blob/main/openttd.cfg.example) was generated using the GUI/Client approach, so there are some extra client side only parameters in there (the file could be much slimmer). There are no environment variables for this container. 
 
 4. Launch the container again and start playing :) 
 
