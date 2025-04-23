@@ -45,8 +45,9 @@ FROM docker.io/library/debian:12-slim AS prod
 ARG OPENTTD_VERSION="14.1"
 
 # Install Packages 
-RUN apt-get update; apt-get upgrade -y; apt-get autoremove -y; apt-get install -y \
-    zlib1g liblzma5 libpng16-16 liblzo2-2 libcurl4 libsdl2-2.0-0 libfluidsynth3
+RUN apt-get update; \
+    apt-get install -y \
+    zlib1g liblzma5 libpng16-16 liblzo2-2 libcurl4 libsdl2-2.0-0 libfluidsynth3 wget curl
 
 
 # Copy OpenTTD from Builder
