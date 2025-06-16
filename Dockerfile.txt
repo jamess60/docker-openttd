@@ -47,7 +47,7 @@ ARG OPENTTD_VERSION="14.1"
 # Install Packages 
 RUN apt-get update; \
     apt-get install -y \
-    zlib1g liblzma5 libpng16-16 liblzo2-2 libcurl4 libsdl2-2.0-0 libfluidsynth3 wget curl
+    zlib1g liblzma5 libpng16-16 liblzo2-2 libcurl4 libsdl2-2.0-0 libfluidsynth3 wget curl netcat
 
 
 # Copy OpenTTD from Builder
@@ -58,6 +58,9 @@ COPY --from=builder /tmp/openttd-${OPENTTD_VERSION}/build /usr/share/openttd
 # Expose
 EXPOSE 3979/tcp
 EXPOSE 3979/udp
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+  CMD nc -z 127.0.0.1 3979 || exit 1
 
 
 # Start OpenTTD server
