@@ -4,9 +4,9 @@
 FROM docker.io/library/debian:12-slim AS builder
 
 # Set Versions
-ARG OPENTTD_VERSION="14.1"
+ARG OPENTTD_VERSION="15.3"
 ARG OPENGFX_VERSION="7.1"
-ARG MAKE_THREADS="2"
+ARG MAKE_THREADS="10"
 
 # Install Packages
 RUN apt-get update; apt-get install -y \
@@ -42,7 +42,7 @@ RUN wget -q -O opengfx-${OPENGFX_VERSION}.zip https://cdn.openttd.org/opengfx-re
 FROM docker.io/library/debian:12-slim AS prod
 
 # Set Versions
-ARG OPENTTD_VERSION="14.1"
+ARG OPENTTD_VERSION="15.3"
 
 # Install Packages 
 RUN apt-get update; \

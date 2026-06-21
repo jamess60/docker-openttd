@@ -12,7 +12,7 @@ My approach is to build OpenTTD from source (as opposed to using the official bi
 
 The [bateau84/openttd](https://github.com/bateau84/openttd) appears to be the community default (based on number of pulls). My container differs in the following ways: 
 - It builds OpenTTD from source, so it can be built on any architecture (not just x86) - This has a huge performance boost for aarch64
-- It's arguably lighter weight - The use of SH scripts and the execution ordering goes against docker image layer philosphy, so the (cleanup)[https://github.com/bateau84/openttd/blob/master/cleanup.sh] could make the image larger! (While I appreciate my image is large, this is because source is left over due to dynamic/static linking etc. Will explore tidying up the compile flags later.)
+- It's arguably lighter weight - The use of SH scripts and the execution ordering goes against docker image layer philosphy, so the [cleanup](https://github.com/bateau84/openttd/blob/master/cleanup.sh) could make the image larger! (While I appreciate my image is large, this is because source is left over due to dynamic/static linking etc. Will explore tidying up the compile flags later.)
 - More up to date packages/openttd version. At time of writing, this image still uses OTTD 13.x
 
 
